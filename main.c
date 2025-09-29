@@ -1,28 +1,20 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include  <stdio.h>
+#include  <string.h>
+#include  <sys/types.h>
 
-#define MAX_COUNT 5
+#define   MAX_COUNT  200
+#define   BUF_SIZE   100
 
-int main(void) {
-    pid_t pid;
-    int i;
+void  main(void)
+{
+     pid_t  pid;
+     int    i;
+     char   buf[BUF_SIZE];
 
-    pid = fork();
-
-    if (pid < 0) {
-        perror("fork failed");
-        exit(1);
-    }
-
-    for (i = 1; i <= MAX_COUNT; i++) {
-        char buffer[100];
-        int n = snprintf(buffer, sizeof(buffer),
-                         "This line is from pid %d, value %d\n",
-                         getpid(), i);
-        write(STDOUT_FILENO, buffer, n);
-    }
-
-    return 0;
+     fork();
+     pid = getpid();
+     for (i = 1; i <= MAX_COUNT; i++) {
+          sprintf(buf, "This line is from pid %d, value = %d\n", pid, i);
+          write(1, buf, strlen(buf));
+     } 
 }
-
